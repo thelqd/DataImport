@@ -7,6 +7,7 @@ For installation clone this repository and run:
 
 Open the config.ini file and set the following data:
 * Folder containing files for import
+** This folder must be created manually
 * Folder containing template files
 * Credentials for your database
 ** Due usage of Doctrine DBAL several databases are supported. I suggest MySQL.
