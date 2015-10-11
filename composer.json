@@ -1,0 +1,23 @@
+{
+  "name": "thelqd/DataImport",
+  "description": "Imports Data from CSV",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Daniel Schubert",
+      "email": "daniel@oldtimerz.com"
+    }
+  ],
+  "require": {
+    "doctrine/dbal": "^2.5",
+    "khill/lavacharts": "2.5.*",
+    "league/plates": "3.*",
+    "arg/tagcloud" : "dev-master"
+  },
+    "autoload": {
+      "psr-4": {
+        "DataImport\\": "src/"
+      }
+    }
+}
