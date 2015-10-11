@@ -8,6 +8,7 @@ use DataImport\Import\Csv;
 use DataImport\Collection\LinkData;
 use DataImport\Database\LinkTable;
 use DataImport\Database\Connection;
+use DataImport\Controller\Front;
 
 class Application {
 
@@ -52,7 +53,8 @@ class Application {
             }
         } else {
             $linkTable = new LinkTable($this->connection);
-            var_dump($linkTable->getCollection());
+            $frontController = new Front($this->config, $linkTable);
+            $frontController->render();
         }
 
     }

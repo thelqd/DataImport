@@ -97,14 +97,33 @@ class LinkData implements AnyModel {
         $this->anchorText   = (isset($data['anchorText'])) ? $data['anchorText'] : null;
         $this->linkStatus   = (isset($data['linkStatus'])) ? $data['linkStatus'] : null;
         $this->type         = (isset($data['type'])) ? $data['type'] : null;
-        $this->blDom        = (isset($data['blDom'])) ? $data['blDom'] : null;
-        $this->domPop       = (isset($data['domPop'])) ? $data['domPop'] : null;
-        $this->power        = (isset($data['power'])) ? $data['power'] : null;
-        $this->trust        = (isset($data['trust'])) ? $data['trust'] : null;
-        $this->powerTrust   = (isset($data['powerTrust'])) ? $data['powerTrust'] : null;
+        $this->blDom        = (isset($data['blDom']))
+            ? $this->formatInt($data['blDom'])
+            : null;
+        $this->domPop       = (isset($data['domPop']))
+            ? $this->formatInt($data['domPop'])
+            : null;
+        $this->power        = (isset($data['power']))
+            ? $this->formatInt($data['power'])
+            : null;
+        $this->trust        = (isset($data['trust']))
+            ? $this->formatInt($data['trust'])
+            : null;
+        $this->powerTrust   = (isset($data['powerTrust']))
+            ? $this->formatInt($data['powerTrust'])
+            : null;
         $this->alexa        = (isset($data['alexa'])) ? $data['alexa'] : null;
         $this->ip           = (isset($data['ip'])) ? $data['ip'] : null;
         $this->countryCode  = (isset($data['countryCode'])) ? $data['countryCode'] : null;
+    }
+
+    /**
+     * @param string $string
+     * @return int
+     */
+    private function formatInt($string)
+    {
+        return (int)preg_replace("/([^0-9\\.])/i", "", $string);
     }
 
 }

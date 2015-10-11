@@ -84,4 +84,110 @@ class LinkTable extends AbstractTable {
         }
         return $linkCollection;
     }
+
+    /**
+     * @return LinkCollection
+     */
+    public function getGroupAnchorText()
+    {
+        $linkCollection = new LinkCollection();
+        $this->queryBuilder
+            ->select('LOWER(anchorText) as anchorText')
+            ->from('link')
+            ->groupBy('anchorText');
+        $result = $this->queryBuilder->execute()->fetchAll();
+        $this->addToCollection($linkCollection, $result);
+        return $linkCollection;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLinkStatus()
+    {
+        $this->queryBuilder
+            ->select('linkStatus, COUNT(linkStatus) as countLinkStatus')
+            ->from('link')
+            ->groupBy('linkStatus');
+        return $this->queryBuilder->execute()->fetchAll();
+    }
+
+    /**
+     * @return array
+     */
+    public function getFromUrlHosts()
+    {
+        $this->queryBuilder
+            ->select("SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(fromUrl, '://', -1),'/',1),'www.', -1) as fromHost, COUNT(*) as countFrom")
+            ->from('link')
+            ->groupBy('fromHost');
+        return $this->queryBuilder->execute()->fetchAll();
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlDomByClass()
+    {
+        $classes = array(
+            array(
+                'title' => '0',
+                'count' => 0
+            ),
+            array(
+                'title' => '1 - 10',
+                'count' => 0
+            ),
+            array(
+                'title' => '11 - 100',
+                'count' => 0
+            ),
+            array(
+                'title' => '< 1,000',
+                'count' => 0
+            ),
+            array(
+                'title' => '< 100,000',
+                'count' => 0
+            ),
+            array(
+                'title' => '> 100,000',
+                'count' => 0
+            )
+        );
+        $this->queryBuilder
+            ->select('blDom')
+            ->from('link')
+            ->groupBy('blDom');
+        $result = $this->queryBuilder->execute()->fetchAll();
+        foreach($result as $row) {
+            if($row['blDom'] == 0) {
+                $classes[0]['count']++;
+            } elseif($row['blDom'] <= 10) {
+                $classes[1]['count']++;
+            } elseif($row['blDom'] <= 100) {
+                $classes[2]['count']++;
+            } elseif($row['blDom'] < 1000) {
+                $classes[3]['count']++;
+            } elseif($row['blDom'] < 100000) {
+                $classes[4]['count']++;
+            } else {
+                $classes[5]['count']++;
+            }
+        }
+        return $classes;
+    }
+
+    /**
+     * @param LinkCollection $linkCollection
+     * @param array $data
+     */
+    private function addToCollection(LinkCollection $linkCollection, $data)
+    {
+        foreach($data as $row) {
+            $model = new LinkModel();
+            $model->setData($row);
+            $linkCollection->addModel($model);
+        }
+    }
 }
