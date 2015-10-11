@@ -19,9 +19,10 @@ is called. Known entry points are web and command line.
 
 ### Import
 To start importing the data run the application on a command line interface.
-Move the file(s9 you want to import the given import folder.
+Move the file(s) you want to import the given import folder.
 Run the following command while in root folder of application:
-    > php index.php [fileToBeimported.csv]
+
+    php index.php [fileToBeimported.csv]
 
 ### View of data
 Just open the application in your web browser (Safari and Chrome) are tested.
