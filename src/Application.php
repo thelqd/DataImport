@@ -12,8 +12,6 @@ use DataImport\Controller\Front;
 
 class Application {
 
-    const BASE_DIR = 'Users/ds/PhpStormProjects/lqdLabs/DataImport/';
-
     /**
      * @var RequestInterface
      */
